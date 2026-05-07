@@ -286,6 +286,16 @@ function initVideo() {
 /* ─── CENA 10 ─── */
 function initFinal() {
   launchConfetti();
+
+  // ✦ REVELAR AS FOTOS DE FUNDO
+  setTimeout(() => {
+    document.querySelectorAll('.final-photo').forEach(el => el.classList.add('visible'));
+  }, 800);
+
+  setTimeout(() => {
+    document.getElementById('finalChapter').style.opacity = '1';
+  }, 500);
+  launchConfetti();
   setTimeout(() => {
     document.getElementById('finalChapter').style.opacity = '1';
   }, 500);
