@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Ana Lídia — A História Que Você Criou</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Cinzel:wght@400;600&family=Lato:wght@300;400&display=swap" rel="stylesheet"/>
+  
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="cursor" id="cursor"></div>
+<div class="cursor-ring" id="cursorRing"></div>
+
+<div class="scene-fade" id="sceneFade"></div>
+
+<div id="progress-bar"></div>
+<div id="chapter-indicator"></div>
+
+<canvas id="particles-canvas"></canvas>
+
+<section class="scene active" id="scene-intro">
+  <div class="stars-bg" id="starsContainer"></div>
+  <p class="intro-line" id="il1">Nem toda história começa com duas pessoas…</p>
+  <div class="intro-spacer"></div>
+  <p class="intro-line" id="il2">Algumas começam com alguém…</p>
+  <p class="intro-line gold" id="il3">que ainda nem sabe o quanto vai mudar o mundo.</p>
+  <button class="btn-next" id="btnIntro" onclick="nextScene()"><span>Continuar →</span></button>
+
+  <div class="scroll-hint" id="scrollHint">
+    <span>Rolar</span>
+    <div class="scroll-arrow"></div>
+  </div>
+</section>
+
+<section class="scene hidden" id="scene-before">
+  <div style="max-width:1000px; width:100%; text-align:center; margin-bottom:30px;">
+    <p class="chapter-title" style="opacity:0; transition:opacity 1s 0.3s;" data-animate="fadeIn">I — O Começo</p>
+    <div class="gold-line"></div>
+  </div>
+
+  <div class="photo-text-block" id="block-before-1">
+    <div class="photo-frame" style="height:420px;">
+      <div class="photo-placeholder">
+        <svg width="40" height="40" fill="none" stroke="currentColor" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="m21 15-5-5L5 21"/></svg>
+        <span>FOTO 1</span>
+        <span style="font-size:8px; opacity:0.6;"><img src="analidiasozinha2.png" alt=""></span>
+      </div>
+    </div>
+    <div class="text-block" id="tb-before-1">
+      <p>"Antes de tudo…"</p>
+      <p class="gold">"Era só você…"</p>
+      <p>"Com sonhos… planos…"</p>
+      <p class="rose">"e um futuro que ainda não existia."</p>
+    </div>
+  </div>
+
+  <div class="photo-text-block reverse" id="block-before-2">
+    <div class="photo-frame" style="height:380px;">
+      <div class="photo-placeholder">
+        <svg width="40" height="40" fill="none" stroke="currentColor" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="m21 15-5-5L5 21"/></svg>
+        <span>FOTO 2</span>
+        <span style="font-size:8px; opacity:0.6;"><img src="analidiasozinha.jpeg" alt=""></span>
+      </div>
+    </div>
+    <div class="text-block reverse" id="tb-before-2">
+      <p>"Você não sabia…"</p>
+      <p class="gold">"Mas já estava se preparando…"</p>
+      <p class="rose">"para a maior missão da sua vida."</p>
+    </div>
+  </div>
+
+  <button class="btn-next show" onclick="nextScene()" style="margin-top:20px;"><span>Continuar →</span></button>
+</section>
+
+<section class="scene hidden" id="scene-lucas">
+  <div style="max-width:1000px; width:100%; text-align:center; margin-bottom:30px;">
+    <p class="chapter-title">II — Tudo Mudou</p>
+    <div class="gold-line"></div>
+  </div>
+
+  <div style="max-width:960px; width:100%; text-align:center; margin-bottom:50px;">
+    <p style="font-family:'Cormorant Garamond',serif; font-style:italic; font-size:clamp(1.4rem,4vw,2rem); color:rgba(255,255,255,0.6); opacity:0; transform:translateY(20px); transition:all 1s ease;" class="scene-text">
+      "E então… tudo mudou."
+    </p>
+  </div>
+
+  <div class="photo-trio" id="trio-lucas">
+    <div class="photo-frame" style="height:360px;">
+      <div class="photo-frame" style="height:420px;">
+  <img src="eubebe.png" alt="Eu bebê com a Ana Lídia">
+</div>
+    </div>
+    <div class="photo-frame" style="height:420px;">//
+     <div class="photo-frame" style="height:420px;">
+  <img src="tudomudou1.png" alt="Eu bebê com a Ana Lídia">
+</div>
+    </div>
+    <div class="photo-frame" style="height:340px;">
+      <div class="photo-frame" style="height:420px;">
+  <img src="eubebeeopai.png" alt="Eu bebê com a Ana Lídia">
+</div>
+    </div>
+  </div>
+
+  <div style="max-width:600px; text-align:center; margin-top:50px;">
+    <p style="font-family:'Cormorant Garamond',serif; font-style:italic; font-size:1.3rem; color:rgba(255,255,255,0.6); line-height:2; opacity:0; transition:all 1s 0.4s;" class="scene-text">
+      "Você virou abrigo… Força… E amor… sem medida."
+    </p>
+    <p style="font-family:'Cormorant Garamond',serif; font-style:italic; font-size:1.1rem; color:var(--rose-light); line-height:2; opacity:0; transition:all 1s 0.8s;" class="scene-text">
+      "Mesmo nas noites difíceis… você nunca soltou."
+    </p>
+  </div>
+
+  <button class="btn-next show" onclick="nextScene()" style="margin-top:40px;"><span>Continuar →</span></button>
+</section>
+
+<section class="scene hidden" id="scene-levi">
+  <div style="max-width:1000px; width:100%; text-align:center; margin-bottom:30px;">
+    <p class="chapter-title">III — O Coração Cresceu</p>
+    <div class="gold-line"></div>
+  </div>
+
+  <div style="max-width:700px; width:100%; text-align:center; margin-bottom:50px;">
+    <p style="font-family:'Cormorant Garamond',serif; font-style:italic; font-size:clamp(1.2rem,3vw,1.8rem); color:rgba(255,255,255,0.6); line-height:1.9; opacity:0; transition:all 1s;" class="scene-text">
+      "E quando parecia que seu coração já estava cheio…"
+    </p>
+  </div>
+
+  <div class="two-photo-merge" id="merge-levi">
+    <div class="merge-line"></div>
+    <div class="photo-frame" style="height:460px;">
+      <div class="photo-frame" style="height:420px;">
+  <img src="leviaaparece.png" alt="levi aparece">
+</div>
+    </div>
+    <div class="photo-frame" style="height:460px;">
+      <div class="photo-frame" style="height:420px;">
+  <img src="leviaparece3.png" alt="levi aparece">
+</div>
+    </div>
+  </div>
+
+  <div style="max-width:600px; text-align:center; margin-top:50px;">
+    <p style="font-family:'Cormorant Garamond',serif; font-style:italic; font-size:1.3rem; color:rgba(255,255,255,0.6); line-height:2; opacity:0; transition:all 1s 0.3s;" class="scene-text">
+      "Ele cresceu ainda mais."
+    </p>
+    <p style="font-family:'Cormorant Garamond',serif; font-style:italic; font-size:1.1rem; color:var(--gold-light); line-height:2; opacity:0; transition:all 1s 0.7s;" class="scene-text">
+      "Agora eram dois… mas o seu amor… nunca precisou ser dividido."
+    </p>
+  </div>
+
+  <button class="btn-next show" onclick="nextScene()" style="margin-top:40px;"><span>Continuar →</span></button>
+</section>
+
+<section class="scene hidden" id="scene-family">
+  <span class="name-float" style="top:10%; left:-5%;">ANA LÍDIA</span>
+
+  <div style="max-width:1000px; width:100%; text-align:center; margin-bottom:20px;">
+    <p class="chapter-title">IV — Os Três Juntos</p>
+    <div class="gold-line"></div>
+    <p style="font-family:'Cormorant Garamond',serif; font-style:italic; font-size:clamp(1.2rem,3vw,1.7rem); color:rgba(255,255,255,0.5); opacity:0; transition:all 1s;" class="scene-text">
+      "Nos dias bons… e nos dias difíceis…"
+    </p>
+  </div>
+
+  <div class="masonry-grid" id="masonry">
+    <div class="masonry-item" style="transition-delay:0s">
+      <div class="photo-placeholder" style="height:280px; background:linear-gradient(135deg,#1a1520,#2a1f35)">
+        <div><img src="diasbons2.png" alt=""></div>
+        <svg width="32" height="32" fill="none" stroke="currentColor" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="m21 15-5-5L5 21"/></svg><span></span>
+      </div>
+      <div class="masonry-overlay">"Risadas que não têm fim…"</div>
+    </div>
+    <div class="masonry-item" style="transition-delay:0.1s">
+      <div class="photo-placeholder" style="height:340px; background:linear-gradient(135deg,#201520,#352030)">
+        <div>
+          <img src="diasbons5.png" alt="">
+        </div>
+        <svg width="32" height="32" fill="none" stroke="currentColor" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="m21 15-5-5L5 21"/></svg><span>FOTO 9</span>
+      </div>
+      <div class="masonry-overlay">"Passeios inesquecíveis…"</div>
+    </div>
+    <div class="masonry-item" style="transition-delay:0.2s">
+      <div class="photo-placeholder" style="height:260px; background:linear-gradient(135deg,#151a20,#1f2a35)">
+        <div>
+          <img src="diasbons6.png" alt="">
+        </div>
+        <svg width="32" height="32" fill="none" stroke="currentColor" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="m21 15-5-5L5 21"/></svg><span>FOTO 10</span>
+      </div>
+      <div class="masonry-overlay">"Momentos simples…"</div>
+    </div>
+    <div class="masonry-item" style="transition-delay:0.15s">
+      <div class="photo-placeholder" style="height:300px; background:linear-gradient(135deg,#1f1a15,#352a1f)">
+        <div>
+          <img src="diasbons1.png" alt="">
+        </div>
+        <svg width="32" height="32" fill="none" stroke="currentColor" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="m21 15-5-5L5 21"/></svg><span>FOTO 11</span>
+      </div>
+      <div class="masonry-overlay">"Que guardaremos pra sempre…"</div>
+    </div>
+    <div class="masonry-item" style="transition-delay:0.25s">
+      <div class="photo-placeholder" style="height:360px; background:linear-gradient(135deg,#1a2015,#2a3520)"><div>
+        <img src="diasbons3.png" alt="">
+      </div>
+        <svg width="32" height="32" fill="none" stroke="currentColor" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="m21 15-5-5L5 21"/></svg><span>FOTO 12</span>
+      </div>
+      <div class="masonry-overlay">"Você sempre esteve lá."</div>
+    </div>
+    <div class="masonry-item" style="transition-delay:0.05s">
+      <div class="photo-placeholder" style="height:290px; background:linear-gradient(135deg,#201a20,#35203a)">
+        <div>
+          <img src="diasbons4.png" alt="">
+        </div>
+        <svg width="32" height="32" fill="none" stroke="currentColor" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="m21 15-5-5L5 21"/></svg><span>FOTO 13</span>
+      </div>
+      <div class="masonry-overlay">"Mesmo quando a gente não percebia…"</div>
+    </div>
+  </div>
+
+  <button class="btn-next show" onclick="nextScene()" style="margin-top:40px;"><span>Continuar →</span></button>
+</section>
+
+<section class="scene hidden" id="scene-moments">
+  <div style="max-width:1000px; width:100%; text-align:center; margin-bottom:30px;">
+    <p class="chapter-title">V — Momentos Marcantes</p>
+    <div class="gold-line"></div>
+    <p style="font-family:'Cormorant Garamond',serif; font-style:italic; font-size:clamp(1.2rem,3vw,1.7rem); color:rgba(255,255,255,0.5); opacity:0; transition:all 1s;" class="scene-text">
+      "Você comemorou nossas vitórias… e segurou nossa mão nas quedas."
+    </p>
+  </div>
+
+  <div class="moments-strip" id="momentsStrip">
+    <div class="moment-card" style="transition-delay:0s">
+      <div class="photo-placeholder" style="height:100%; background:linear-gradient(160deg,#1a1520,#2a2035)">
+        <div><img src="momentosjuntos4.png" alt=""></div>
+        <svg width="36" height="36" fill="none" stroke="currentColor" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="m21 15-5-5L5 21"/></svg><span>FOTO 14</span>
+      </div>
+      <div class="moment-card-text">"Na escola… nos primeiros passos…"</div>
+    </div>
+    <div class="moment-card" style="transition-delay:0.12s">
+      <div class="photo-placeholder" style="height:100%; background:linear-gradient(160deg,#201a15,#352a1f)">
+        <div>
+          <img src="momentosjuntos3.png" alt="">
+        </div>
+        <svg width="36" height="36" fill="none" stroke="currentColor" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="m21 15-5-5L5 21"/></svg><span>FOTO 15</span>
+      </div>
+      <div class="moment-card-text">"Nas conquistas… grandes e pequenas…"</div>
+    </div>
+    <div class="moment-card" style="transition-delay:0.24s">
+      <div class="photo-placeholder" style="height:100%; background:linear-gradient(160deg,#151a20,#1f2a35)">
+        <div>
+          <img src="momentosjuntos1.png" alt="">
+        </div>
+        <svg width="36" height="36" fill="none" stroke="currentColor" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="m21 15-5-5L5 21"/></svg><span>FOTO 16</span>
+      </div>
+      <div class="moment-card-text">"Nas viagens… nas memórias…"</div>
+    </div>
+    <div class="moment-card" style="transition-delay:0.36s">
+      <div class="photo-placeholder" style="height:100%; background:linear-gradient(160deg,#1f1520,#35203a)">
+        <div>
+          <img src="momentosjuntos2.png" alt="">
+        </div>
+        <svg width="36" height="36" fill="none" stroke="currentColor" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="m21 15-5-5L5 21"/></svg><span>FOTO 17</span>
+      </div>
+      <div class="moment-card-text">"Você foi muito mais do que mãe… foi tudo."</div>
+    </div>
+  </div>
+
+  <div style="max-width:600px; text-align:center; margin-top:40px; opacity:0; transition:all 1s 0.5s;" class="scene-text">
+    <p style="font-family:'Cormorant Garamond',serif; font-style:italic; font-size:clamp(1.3rem,3vw,1.8rem); color:var(--gold-light);">
+      "Você foi muito mais do que mãe…<br>Foi tudo."
+    </p>
+  </div>
+
+  <button class="btn-next show" onclick="nextScene()" style="margin-top:50px;"><span>Continuar →</span></button>
+</section>
+
+<section class="scene hidden" id="scene-interactive">
+  <div class="interactive-box">
+    <p style="font-family:'Cinzel',serif; font-size:9px; letter-spacing:0.5em; color:var(--gold); margin-bottom:20px; opacity:0; transition:opacity 1s;" class="scene-text">VI — UMA PERGUNTA</p>
+    <h2 style="opacity:0; transition:all 1s 0.3s;" class="scene-text">
+      "Mas tem uma coisa…<br>que talvez você nunca tenha percebido…"
+    </h2>
+    <div class="gold-line"></div>
+    <p style="opacity:0; transition:all 1s 0.6s;" class="scene-text">
+      O que você acha que você é pra gente?
+    </p>
+
+    <div class="input-line" style="opacity:0; transition:all 1s 0.9s;" class="scene-text" id="inputBlock">
+      <input type="text" id="answerInput" placeholder="Escreva aqui…" maxlength="80"/>
+    </div>
+
+    <button class="btn-discover" id="btnDiscover" onclick="revealAnswer()" style="opacity:0; transition:all 1s 1.2s;">
+      <span>Descobrir ✦</span>
+    </button>
+
+    <div class="reveal-answer" id="revealAnswer"></div>
+    <button class="btn-next" id="btnAfterReveal" style="display:none; opacity:0; transition:all 0.8s; margin-top:30px; color:#1a0f0f; border-color:rgba(0,0,0,0.3);" onclick="nextScene()"><span>Continuar →</span></button>
+  </div>
+</section>
+
+<section class="scene hidden" id="scene-climax">
+  <div style="text-align:center; max-width:700px;">
+    <p class="climax-text" id="cl1">"Mas nenhuma palavra…"</p>
+    <p class="climax-text" id="cl2">"Nenhuma foto…"</p>
+    <p class="climax-text" id="cl3">"Consegue explicar tudo…"</p>
+    <div class="gold-line" style="opacity:0; transition:opacity 1s 2.5s;" id="climaxLine"></div>
+    <p class="climax-text big" id="cl4">"Então a gente fez isso…"</p>
+    <button class="btn-next" id="btnClimax" onclick="nextScene()" style="margin-top:40px;"><span>Ver ▶</span></button>
+  </div>
+</section>
+
+<section class="scene hidden" id="scene-video">
+  <div style="text-align:center; margin-bottom:30px;">
+    <p class="chapter-title" style="font-size:11px; letter-spacing:0.6em; color:var(--gold);">— Para Você —</p>
+  </div>
+
+  <div class="video-container">
+    <div class="video-glow"></div>
+    <div class="video-placeholder-box">
+      <svg width="64" height="64" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="opacity:0.3; color:var(--gold)">
+        <polygon points="5,3 19,12 5,21"/>
+      </svg>
+      <p>ADICIONE O VÍDEO AQUI</p>
+      <p style="font-size:8px; opacity:0.5;">video/video-final.mp4 — ou iframe do YouTube</p>
+    </div>
+  </div>
+
+  <button class="btn-next show" onclick="nextScene()" style="margin-top:40px; border-color:rgba(255,255,255,0.3); color:rgba(255,255,255,0.5);">
+    <span>Finalizar →</span>
+  </button>
+</section>
+
+<section class="scene hidden" id="scene-final">
+  <div class="stars-bg" id="starsContainerFinal"></div>
+  <span class="name-float" style="bottom:5%; right:-5%;">ANA LÍDIA</span>
+
+  <div class="final-content">
+    <p class="chapter-title" style="opacity:0; transition:opacity 1s 0.5s; font-size:10px; letter-spacing:0.6em;" id="finalChapter">✦ ✦ ✦</p>
+    
+    <p class="final-line" id="fl1" style="transition-delay:0.8s">"Obrigado por tudo…"</p>
+    <p class="final-line" id="fl2" style="transition-delay:1.3s">"Por cada momento…"</p>
+    <p class="final-line" id="fl3" style="transition-delay:1.8s">"Por cada cuidado…"</p>
+    <p class="final-line" id="fl4" style="transition-delay:2.3s">"Por cada abraço que fez a gente sentir em casa."</p>
+
+    <div class="gold-line" style="opacity:0; transition:opacity 1s 3s;" id="finalLine"></div>
+
+    <p class="final-main" id="finalMain" style="transition-delay:3.2s;">
+      Feliz Aniversário,<br>Ana Lídia ❤️
+    </p>
+
+    <p class="signature" id="finalSig" style="transition-delay:4.5s;">
+      Com amor infinito, Lucas & Levi
+    </p>
+
+    <div style="margin-top:60px; opacity:0; transition:opacity 1.5s 5s;" id="finalButtons">
+      <button class="btn-restart" id="btnRestart" onclick="restartExperience()">
+        ↺ &nbsp; Ver Novamente
+      </button>
+    </div>
+  </div>
+</section>
+
+<script src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,800 @@
+:root {
+  --gold: #c9a84c;
+  --gold-light: #e8c97a;
+  --cream: #f5efe6;
+  --dark: #0a0a0a;
+  --deep: #111015;
+  --rose: #c47a7a;
+  --rose-light: #e8a8a8;
+  --purple: #6b4f7a;
+  --muted: #888;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--dark);
+  color: #fff;
+  font-family: 'Lato', sans-serif;
+  font-weight: 300;
+  overflow-x: hidden;
+  cursor: none;
+}
+
+/* CURSOR PERSONALIZADO */
+.cursor {
+  position: fixed;
+  width: 12px; height: 12px;
+  background: var(--gold);
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 99999;
+  transform: translate(-50%, -50%);
+  transition: transform 0.1s ease, width 0.3s, height 0.3s, background 0.3s;
+  mix-blend-mode: difference;
+}
+.cursor-ring {
+  position: fixed;
+  width: 36px; height: 36px;
+  border: 1px solid rgba(201,168,76,0.5);
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 99998;
+  transform: translate(-50%, -50%);
+  transition: left 0.12s ease, top 0.12s ease, width 0.3s, height 0.3s;
+}
+
+/* PARTÍCULAS */
+#particles-canvas {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  pointer-events: none;
+  z-index: 0;
+  opacity: 0.4;
+}
+
+/* SEÇÕES */
+.scene {
+  position: relative;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  z-index: 1;
+  opacity: 0;
+  transition: opacity 0.8s ease;
+  padding: 60px 20px;
+}
+.scene.active { opacity: 1; }
+.scene.hidden { display: none; }
+
+/* LINHA DE PROGRESSO */
+#progress-bar {
+  position: fixed;
+  top: 0; left: 0;
+  height: 2px;
+  background: linear-gradient(90deg, var(--rose), var(--gold), var(--purple));
+  z-index: 9999;
+  transition: width 0.6s ease;
+  width: 0%;
+}
+
+/* INDICADOR DE CAPÍTULO */
+#chapter-indicator {
+  position: fixed;
+  top: 24px;
+  right: 30px;
+  font-family: 'Cinzel', serif;
+  font-size: 10px;
+  letter-spacing: 0.3em;
+  color: rgba(255,255,255,0.3);
+  z-index: 9999;
+  transition: all 0.5s ease;
+}
+
+/* ========================= CENA 1 — ABERTURA ========================= */
+#scene-intro {
+  background: #000;
+  text-align: center;
+}
+#scene-intro::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse at center, rgba(107,79,122,0.15) 0%, transparent 70%);
+}
+
+.intro-line {
+  font-family: 'Cormorant Garamond', serif;
+  font-style: italic;
+  font-weight: 300;
+  font-size: clamp(1.1rem, 3vw, 1.7rem);
+  line-height: 1.9;
+  color: rgba(255,255,255,0);
+  letter-spacing: 0.05em;
+  max-width: 680px;
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 1.2s ease, transform 1.2s ease, color 1.2s ease;
+}
+.intro-line.show {
+  opacity: 1;
+  transform: translateY(0);
+  color: rgba(255,255,255,0.88);
+}
+.intro-line.gold { color: var(--gold-light) !important; }
+.intro-spacer { height: 28px; }
+
+/* BOTÃO */
+.btn-next {
+  margin-top: 52px;
+  padding: 16px 48px;
+  border: 1px solid var(--gold);
+  background: transparent;
+  color: var(--gold);
+  font-family: 'Cinzel', serif;
+  font-size: 11px;
+  letter-spacing: 0.35em;
+  text-transform: uppercase;
+  cursor: none;
+  opacity: 0;
+  transform: translateY(10px);
+  transition: all 0.6s ease;
+  position: relative;
+  overflow: hidden;
+}
+.btn-next::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: var(--gold);
+  transform: translateX(-101%);
+  transition: transform 0.4s ease;
+}
+.btn-next:hover::before { transform: translateX(0); }
+.btn-next:hover { color: #000; }
+.btn-next span { position: relative; z-index: 1; }
+.btn-next.show { opacity: 1; transform: translateY(0); }
+
+/* ========================= CENA 2 — INÍCIO DELA ========================= */
+#scene-before { background: var(--deep); }
+#scene-before::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse at 20% 50%, rgba(100,80,120,0.12) 0%, transparent 60%);
+}
+
+.photo-text-block {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 60px;
+  align-items: center;
+  max-width: 1000px;
+  width: 100%;
+  margin-bottom: 80px;
+}
+.photo-text-block.reverse { direction: rtl; }
+.photo-text-block.reverse > * { direction: ltr; }
+
+.photo-frame {
+  position: relative;
+  aspect-ratio: 3/4;
+  overflow: hidden;
+  border-radius: 2px;
+}
+.photo-frame::before {
+  content: '';
+  position: absolute;
+  inset: -1px;
+  border: 1px solid rgba(201,168,76,0.3);
+  z-index: 2;
+  border-radius: 2px;
+}
+.photo-frame::after {
+  content: '';
+  position: absolute;
+  inset: 8px;
+  border: 1px solid rgba(201,168,76,0.15);
+  z-index: 2;
+  border-radius: 1px;
+}
+.photo-frame img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  filter: sepia(0.15) contrast(1.05);
+  transition: transform 6s ease;
+}
+.photo-frame:hover img { transform: scale(1.06); }
+
+/* PLACEHOLDER FOTO */
+.photo-placeholder {
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(135deg, #1a1520, #2a1f35);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  color: rgba(255,255,255,0.2);
+  font-size: 11px;
+  letter-spacing: 0.2em;
+  font-family: 'Cinzel', serif;
+}
+.photo-placeholder svg { opacity: 0.25; }
+
+.text-block {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+.text-block p {
+  font-family: 'Cormorant Garamond', serif;
+  font-style: italic;
+  font-size: clamp(1.2rem, 2.5vw, 1.55rem);
+  line-height: 1.75;
+  color: rgba(255,255,255,0.75);
+  opacity: 0;
+  transform: translateX(-30px);
+  transition: opacity 0.9s ease, transform 0.9s ease;
+}
+.text-block.reverse p { transform: translateX(30px); }
+.text-block p.show { opacity: 1; transform: translateX(0); }
+.text-block p.gold { color: var(--gold-light); }
+.text-block p.rose { color: var(--rose-light); }
+
+.chapter-title {
+  font-family: 'Cinzel', serif;
+  font-size: 9px;
+  letter-spacing: 0.5em;
+  color: var(--gold);
+  text-transform: uppercase;
+  margin-bottom: 8px;
+  opacity: 0.7;
+}
+
+/* DIVISOR */
+.divider {
+  width: 1px;
+  height: 60px;
+  background: linear-gradient(to bottom, transparent, var(--gold), transparent);
+  margin: 10px auto 40px;
+}
+
+/* ========================= CENA 3 — LUCAS ========================= */
+#scene-lucas {
+  background: var(--deep);
+}
+#scene-lucas::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse at 80% 30%, rgba(196,122,122,0.08) 0%, transparent 60%);
+}
+
+/* GALERIA 3 FOTOS */
+.photo-trio {
+  display: grid;
+  grid-template-columns: 1fr 1.2fr 1fr;
+  gap: 20px;
+  max-width: 900px;
+  width: 100%;
+  align-items: start;
+}
+.photo-trio .photo-frame:nth-child(2) {
+  margin-top: -30px;
+}
+
+/* ========================= CENA 4 — LEVI ========================= */
+#scene-levi {
+  background: var(--deep);
+}
+#scene-levi::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse at 20% 70%, rgba(100,150,200,0.07) 0%, transparent 60%);
+}
+
+.two-photo-merge {
+  display: flex;
+  gap: 0;
+  max-width: 700px;
+  width: 100%;
+  position: relative;
+}
+.two-photo-merge .photo-frame {
+  flex: 1;
+  border-radius: 0;
+  transition: flex 0.5s ease;
+}
+.two-photo-merge .photo-frame:first-child { border-radius: 2px 0 0 2px; }
+.two-photo-merge .photo-frame:last-child { border-radius: 0 2px 2px 0; }
+.two-photo-merge .photo-frame:hover { flex: 1.3; }
+.merge-line {
+  position: absolute;
+  top: 0; bottom: 0;
+  left: 50%;
+  width: 2px;
+  background: linear-gradient(to bottom, transparent, var(--gold), transparent);
+  z-index: 10;
+}
+
+/* ========================= CENA 5 — FAMÍLIA ========================= */
+#scene-family {
+  background: var(--deep);
+  min-height: auto;
+  padding: 80px 20px;
+}
+
+.masonry-grid {
+  column-count: 3;
+  column-gap: 16px;
+  max-width: 960px;
+  width: 100%;
+}
+.masonry-item {
+  break-inside: avoid;
+  margin-bottom: 16px;
+  position: relative;
+  overflow: hidden;
+  border-radius: 2px;
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.7s ease, transform 0.7s ease;
+}
+.masonry-item.show { opacity: 1; transform: translateY(0); }
+.masonry-item img {
+  width: 100%;
+  display: block;
+  filter: sepia(0.1);
+  transition: transform 0.6s ease, filter 0.6s ease;
+}
+.masonry-item:hover img {
+  transform: scale(1.04);
+  filter: sepia(0) contrast(1.05);
+}
+.masonry-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgba(0,0,0,0.7) 0%, transparent 50%);
+  opacity: 0;
+  transition: opacity 0.4s;
+  display: flex;
+  align-items: flex-end;
+  padding: 16px;
+  font-family: 'Cormorant Garamond', serif;
+  font-style: italic;
+  font-size: 0.9rem;
+  color: var(--gold-light);
+}
+.masonry-item:hover .masonry-overlay { opacity: 1; }
+
+/* TEXT FLOAT */
+.float-text {
+  font-family: 'Cormorant Garamond', serif;
+  font-style: italic;
+  font-size: clamp(1.4rem, 4vw, 2.2rem);
+  color: rgba(255,255,255,0.08);
+  position: absolute;
+  pointer-events: none;
+  user-select: none;
+  white-space: nowrap;
+}
+
+/* ========================= CENA 6 — MOMENTOS MARCANTES ========================= */
+#scene-moments {
+  background: #050505;
+}
+#scene-moments::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse at 50% 50%, rgba(196,122,122,0.06) 0%, transparent 70%);
+}
+
+.moments-strip {
+  display: flex;
+  gap: 12px;
+  max-width: 1100px;
+  width: 100%;
+  overflow-x: auto;
+  scrollbar-width: none;
+  padding: 10px 0 30px;
+}
+.moments-strip::-webkit-scrollbar { display: none; }
+.moment-card {
+  flex: 0 0 260px;
+  height: 380px;
+  position: relative;
+  border-radius: 3px;
+  overflow: hidden;
+  opacity: 0;
+  transition: opacity 0.8s ease, transform 0.8s ease, flex-basis 0.4s ease;
+  transform: translateY(40px);
+  cursor: none;
+}
+.moment-card.show { opacity: 1; transform: translateY(0); }
+.moment-card:hover { flex-basis: 320px; }
+.moment-card img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: grayscale(0.3);
+  transition: filter 0.5s, transform 0.5s;
+}
+.moment-card:hover img { filter: grayscale(0); transform: scale(1.05); }
+.moment-card-text {
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  padding: 30px 20px 20px;
+  background: linear-gradient(to top, rgba(0,0,0,0.85), transparent);
+  font-family: 'Cormorant Garamond', serif;
+  font-style: italic;
+  color: rgba(255,255,255,0.85);
+  font-size: 1rem;
+  line-height: 1.5;
+}
+
+/* ========================= CENA 7 — INTERATIVO ========================= */
+#scene-interactive {
+  background: var(--cream);
+}
+#scene-interactive::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse at 60% 40%, rgba(201,168,76,0.15) 0%, transparent 70%);
+}
+
+.interactive-box {
+  max-width: 600px;
+  width: 100%;
+  text-align: center;
+}
+.interactive-box h2 {
+  font-family: 'Cormorant Garamond', serif;
+  font-weight: 300;
+  font-size: clamp(1.8rem, 5vw, 2.8rem);
+  color: #1a0f0f;
+  line-height: 1.4;
+  margin-bottom: 12px;
+}
+.interactive-box p {
+  font-size: 1rem;
+  color: #555;
+  margin-bottom: 40px;
+  letter-spacing: 0.05em;
+}
+.input-line {
+  position: relative;
+  margin-bottom: 8px;
+}
+.input-line input {
+  width: 100%;
+  padding: 16px 0;
+  border: none;
+  border-bottom: 2px solid rgba(0,0,0,0.15);
+  background: transparent;
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.3rem;
+  color: #1a0f0f;
+  text-align: center;
+  outline: none;
+  transition: border-color 0.3s;
+}
+.input-line input::placeholder { color: rgba(0,0,0,0.25); }
+.input-line input:focus { border-color: var(--gold); }
+.btn-discover {
+  margin-top: 32px;
+  padding: 16px 52px;
+  border: 2px solid var(--gold);
+  background: transparent;
+  color: var(--gold);
+  font-family: 'Cinzel', serif;
+  font-size: 11px;
+  letter-spacing: 0.4em;
+  text-transform: uppercase;
+  cursor: none;
+  position: relative;
+  overflow: hidden;
+  transition: all 0.4s;
+}
+.btn-discover::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: var(--gold);
+  transform: translateY(101%);
+  transition: transform 0.4s ease;
+}
+.btn-discover:hover::before { transform: translateY(0); }
+.btn-discover:hover { color: #fff; }
+.btn-discover span { position: relative; z-index: 1; }
+
+.reveal-answer {
+  margin-top: 48px;
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(2rem, 6vw, 3.5rem);
+  font-weight: 300;
+  color: #1a0f0f;
+  line-height: 1.3;
+  opacity: 0;
+  transform: scale(0.9);
+  transition: all 0.8s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+.reveal-answer.show { opacity: 1; transform: scale(1); }
+.reveal-heart {
+  font-size: 2.5rem;
+  animation: heartbeat 1.2s ease-in-out infinite;
+}
+@keyframes heartbeat {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.2); }
+}
+
+/* ========================= CENA 8 — CLÍMAX ========================= */
+#scene-climax {
+  background: #000;
+  text-align: center;
+}
+#scene-climax::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse at center, rgba(201,168,76,0.06) 0%, transparent 70%);
+}
+.climax-text {
+  font-family: 'Cormorant Garamond', serif;
+  font-style: italic;
+  font-size: clamp(1.2rem, 3vw, 1.8rem);
+  color: rgba(255,255,255,0.7);
+  line-height: 2.2;
+  opacity: 0;
+  transform: translateY(15px);
+  transition: all 1s ease;
+}
+.climax-text.show { opacity: 1; transform: translateY(0); }
+.climax-text.big {
+  font-size: clamp(1.5rem, 4vw, 2.2rem);
+  color: var(--gold-light);
+}
+
+/* ========================= CENA 9 — VÍDEO ========================= */
+#scene-video {
+  background: #000;
+  padding: 40px 20px;
+}
+.video-container {
+  max-width: 860px;
+  width: 100%;
+  position: relative;
+  border-radius: 4px;
+  overflow: hidden;
+  box-shadow: 0 0 80px rgba(201,168,76,0.15);
+}
+.video-container video,
+.video-container iframe {
+  width: 100%;
+  aspect-ratio: 16/9;
+  display: block;
+  border: none;
+}
+.video-placeholder-box {
+  width: 100%;
+  aspect-ratio: 16/9;
+  background: linear-gradient(135deg, #0d0d0d, #1a1520);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+  border: 1px solid rgba(201,168,76,0.2);
+}
+.video-placeholder-box svg { opacity: 0.3; }
+.video-placeholder-box p {
+  font-family: 'Cinzel', serif;
+  font-size: 10px;
+  letter-spacing: 0.4em;
+  color: rgba(255,255,255,0.3);
+}
+.video-glow {
+  position: absolute;
+  inset: -20px;
+  background: radial-gradient(ellipse at center, rgba(201,168,76,0.12), transparent 70%);
+  pointer-events: none;
+  z-index: -1;
+}
+
+/* ========================= CENA 10 — FINAL ========================= */
+#scene-final {
+  background: var(--deep);
+  text-align: center;
+  min-height: 100vh;
+}
+#scene-final::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse at center, rgba(196,122,122,0.1) 0%, transparent 60%);
+}
+
+.final-content { max-width: 700px; text-align: center; }
+.final-line {
+  font-family: 'Cormorant Garamond', serif;
+  font-style: italic;
+  font-size: clamp(1rem, 2.5vw, 1.5rem);
+  color: rgba(255,255,255,0.6);
+  line-height: 2;
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 1s ease, transform 1s ease;
+}
+.final-line.show { opacity: 1; transform: translateY(0); }
+.final-main {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(2rem, 6vw, 3.8rem);
+  font-weight: 300;
+  color: var(--gold-light);
+  line-height: 1.3;
+  margin: 30px 0;
+  opacity: 0;
+  transform: scale(0.95);
+  transition: all 1.2s cubic-bezier(0.34, 1.2, 0.64, 1);
+}
+.final-main.show { opacity: 1; transform: scale(1); }
+.signature {
+  font-family: 'Cinzel', serif;
+  font-size: 11px;
+  letter-spacing: 0.5em;
+  color: rgba(255,255,255,0.35);
+  margin-top: 16px;
+  opacity: 0;
+  transition: opacity 1.5s ease;
+}
+.signature.show { opacity: 1; }
+
+/* CONFETTI */
+.confetti-piece {
+  position: fixed;
+  width: 8px;
+  height: 8px;
+  top: -10px;
+  opacity: 0;
+  animation: confettiFall linear forwards;
+  z-index: 9999;
+  pointer-events: none;
+  border-radius: 1px;
+}
+@keyframes confettiFall {
+  0% { transform: translateY(0) rotate(0deg); opacity: 1; }
+  100% { transform: translateY(110vh) rotate(720deg); opacity: 0; }
+}
+
+/* ESTRELAS */
+.stars-bg {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+}
+.star {
+  position: absolute;
+  background: #fff;
+  border-radius: 50%;
+  animation: twinkle var(--d, 3s) ease-in-out infinite var(--delay, 0s);
+}
+@keyframes twinkle {
+  0%, 100% { opacity: 0.1; transform: scale(1); }
+  50% { opacity: 0.8; transform: scale(1.2); }
+}
+
+/* LINHA DOURADA DECORATIVA */
+.gold-line {
+  width: 80px;
+  height: 1px;
+  background: linear-gradient(to right, transparent, var(--gold), transparent);
+  margin: 30px auto;
+}
+
+/* RESPONSIVO */
+@media (max-width: 768px) {
+  .photo-text-block {
+    grid-template-columns: 1fr;
+    gap: 30px;
+  }
+  .photo-text-block.reverse { direction: ltr; }
+  .photo-trio { grid-template-columns: 1fr; gap: 12px; }
+  .photo-trio .photo-frame:nth-child(2) { margin-top: 0; }
+  .masonry-grid { column-count: 2; }
+  .two-photo-merge { flex-direction: column; }
+  .two-photo-merge .photo-frame { border-radius: 2px; }
+}
+@media (max-width: 480px) {
+  .masonry-grid { column-count: 1; }
+}
+
+/* SCROLL SUAVE */
+.scroll-hint {
+  position: absolute;
+  bottom: 30px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  opacity: 0;
+  animation: fadeInUp 1s ease 3s forwards;
+}
+@keyframes fadeInUp {
+  to { opacity: 0.5; }
+}
+.scroll-hint span {
+  font-family: 'Cinzel', serif;
+  font-size: 9px;
+  letter-spacing: 0.4em;
+  color: rgba(255,255,255,0.4);
+}
+.scroll-arrow {
+  width: 20px;
+  height: 20px;
+  border-right: 1px solid rgba(255,255,255,0.3);
+  border-bottom: 1px solid rgba(255,255,255,0.3);
+  transform: rotate(45deg);
+  animation: arrowBounce 1.5s ease-in-out infinite;
+}
+@keyframes arrowBounce {
+  0%, 100% { transform: rotate(45deg) translateY(0); }
+  50% { transform: rotate(45deg) translateY(5px); }
+}
+
+/* FADE DE TRANSIÇÃO */
+.scene-fade {
+  position: fixed;
+  inset: 0;
+  background: #000;
+  z-index: 9990;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.6s ease;
+}
+.scene-fade.active { opacity: 1; }
+
+/* NOME FLUTUANTE */
+.name-float {
+  font-family: 'Cinzel', serif;
+  font-size: clamp(2.5rem, 8vw, 5rem);
+  color: transparent;
+  -webkit-text-stroke: 1px rgba(201,168,76,0.4);
+  letter-spacing: 0.2em;
+  user-select: none;
+  position: absolute;
+  opacity: 0.06;
+  pointer-events: none;
+}
+
+/* BOTÃO RESTART */
+.btn-restart {
+  margin-top: 40px;
+  padding: 14px 40px;
+  border: 1px solid rgba(255,255,255,0.2);
+  background: transparent;
+  color: rgba(255,255,255,0.4);
+  font-family: 'Cinzel', serif;
+  font-size: 10px;
+  letter-spacing: 0.35em;
+  text-transform: uppercase;
+  cursor: none;
+  transition: all 0.4s;
+  opacity: 0;
+  transition: opacity 1s ease 2s, color 0.3s, border-color 0.3s;
+}
+.btn-restart.show { opacity: 1; }
+.btn-restart:hover { border-color: var(--gold); color: var(--gold); }
